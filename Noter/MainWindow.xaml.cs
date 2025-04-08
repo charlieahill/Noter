@@ -38,6 +38,11 @@ namespace Noter
         BindingList<NoteModel> notes = new BindingList<NoteModel>();
 
         /// <summary>
+        /// Shows archived topics
+        /// </summary>
+        public bool ShowArchived { get; set; } = false;
+
+        /// <summary>
         /// Generates a new instance of the main window class
         /// </summary>
         public MainWindow()
@@ -152,13 +157,36 @@ namespace Noter
         /// </summary>
         private void RefreshListBoxItemsSource()
         {
-            NotesListBox.ItemsSource = null;
-            NotesListBox.ItemsSource = notes;
+            if (ShowArchived)
+            {
+                NotesListBox.ItemsSource = null;
+                NotesListBox.ItemsSource = notes;
+            }
 
-            if(notes.Count > 0)
-            NotesListBox.SelectedItem = NotesListBox.Items[NotesListBox.Items.Count- 1];
+            if (!ShowArchived)
+            {
+                NotesListBox.ItemsSource = null;
+                NotesListBox.ItemsSource = notes.Where(x => x.IsArchived == false).ToList();
+            }
+
+            if (NotesListBox.Items.Count > 0)
+                NotesListBox.SelectedItem = NotesListBox.Items[NotesListBox.Items.Count - 1];
         }
 
+        private void ShowArchivedButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowArchived = !ShowArchived;
 
+            if (ShowArchived) ShowArchivedButton.Content = "Hide Archived";
+            if (!ShowArchived) ShowArchivedButton.Content = "Show Archived";
+
+            RefreshListBoxItemsSource();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            RefreshListBoxItemsSource();
+        }
     }
 }
+ 

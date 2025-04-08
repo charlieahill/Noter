@@ -13,9 +13,10 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!-- NOTES -->
         <DockPanel LastChildFill="True">
+            <Button Name="ShowArchivedButton" DockPanel.Dock="Top" Margin="0 0 0 5" Click="ShowArchivedButton_Click">Show Archived</Button>
             <Button DockPanel.Dock="Bottom" Margin="0 5 0 0" Click="AddNewNoteButton_Click">+</Button>
             <ListView Name="NotesListBox" ItemsSource="{Binding Components, Mode=OneWay}" SelectionChanged="DaysListBox_SelectionChanged" SelectionMode="Single">
                 <ListView.ItemTemplate>
@@ -27,15 +28,24 @@
         </DockPanel>
 
         <!--DATE, LOCATION, TEXT-->
-                <Grid Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBox Margin="0 0 0 20" FontSize="14" FontStyle="Italic" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DockPanel Grid.Row="1">
-                        <RichTextBox Name="rtbEditor"/>
-                    </DockPanel>
-                </Grid>
-    </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBox Margin="0 0 0 20" FontSize="14" FontStyle="Italic" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+            <DockPanel Grid.Row="1">
+                <RichTextBox Name="rtbEditor"/>
+            </DockPanel>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <!--<Button Grid.Column="1" Padding="5 0" Click="ArchiveNoteButton_Click" Margin="0 5 0 0">Archive</Button>-->
+                <CheckBox Grid.Column="1" Padding="5 0" Margin="0 5 0 0" IsChecked="{Binding IsArchived, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked">Archive</CheckBox>
+            </Grid>
+        </Grid>
+    </Grid> 
 </Window>

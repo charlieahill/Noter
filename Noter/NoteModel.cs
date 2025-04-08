@@ -25,10 +25,24 @@ namespace Noter
         }
 
         public string Link { get; set; }
+
+        public bool IsArchived
+        {
+            get { return isArchived; }
+            set
+            {
+                isArchived = !IsArchived;
+                RaisePropertyChanged("IsArchived");
+            }
+        }
+
+        private bool isArchived;
+
         public NoteModel(string link)
         {
             Title = "new page";
             Link = link;
+            IsArchived = false;
         }
         /// <summary>
         /// Paramaterless constructor required for serialisation
